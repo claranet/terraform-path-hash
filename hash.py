@@ -10,6 +10,11 @@ import os
 import sys
 
 
+IGNORED_NAMES = set((
+    '.git',
+))
+
+
 def abort(message):
     """
     Exits with an error message.
@@ -30,7 +35,8 @@ def list_files(top_path):
 
     for root, dirs, files in os.walk(top_path):
         for file_name in files:
-            results.append(os.path.join(root, file_name))
+            if file_name not in IGNORED_NAMES:
+                results.append(os.path.join(root, file_name))
 
     results.sort()
     return results
